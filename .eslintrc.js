@@ -15,6 +15,10 @@ module.exports = {
   plugins: [
     'html'
   ],
+  globals: {
+    '_': true,
+    'utils': true
+  }, 
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions

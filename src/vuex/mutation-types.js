@@ -1,0 +1,19 @@
+// auth
+export const UPDATE_AUTH_STATUS = 'UPDATE_AUTH_STATUS'
+export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_CHANGE_PWD_NICKNAME = 'UPDATE_CHANGE_PWD_NICKNAME'
+
+// loading status
+export const UPDATE_LOADING_STATUS = 'UPDATE_LOADING_STATUS'
+
+// settings
+export const UPDATE_SETTINGS_STATUS = 'UPDATE_SETTINGS_STATUS'
+
+// video
+export const UPDATE_VIDEO_DETAIL = 'UPDATE_VIDEO_DETAIL'
+
+// toast
+export const UPDATE_TOAST = 'UPDATE_TOAST'
+
+// channel
+export const UPDATE_CHANNEL = 'UPDATE_CHANNEL'
