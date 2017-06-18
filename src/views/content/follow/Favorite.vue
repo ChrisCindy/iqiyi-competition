@@ -1,5 +1,8 @@
 <template>
   <div id="favorite">
+    <div class="no-favorite-tip" v-if="favoriteVideo.length === 0">
+      您没有收藏的视频，赶快去关注吧~
+    </div>
     <mu-list>
       <mu-list-item @click="jumpToVideoDetail(video)" v-for="video in favoriteVideo" :title="video.title" :key="video.id">
         <img class="left-cover"
@@ -59,6 +62,10 @@ export default {
 
 <style lang="less">
   #favorite {
+    .no-favorite-tip {
+      margin-top: 60px;
+      text-align: center;
+    }
     .left-cover {
       width: 125%;
     }

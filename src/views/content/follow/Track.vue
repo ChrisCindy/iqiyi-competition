@@ -1,6 +1,9 @@
 <template>
   <div id="track">
-    <mu-list>
+    <div class="no-track-tip" v-if="trackVideo.length === 0">
+      您没有在追的剧，赶快去关注吧~
+    </div>
+    <mu-list v-else>
       <mu-list-item @click="jumpToVideoDetail(video)" v-for="video in trackVideo" :title="video.title" :key="video.id">
         <img class="left-cover"
         :src="video.img" alt="" slot="left">
@@ -60,6 +63,10 @@ export default {
 
 <style lang="less">
   #track {
+    .no-track-tip {
+      margin-top: 60px;
+      text-align: center;
+    }
     .left-cover {
       width: 125%;
     }

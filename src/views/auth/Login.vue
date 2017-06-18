@@ -23,7 +23,7 @@ export default {
   name: 'login',
   data () {
     return {
-      nickname: 'chris',
+      nickname: '',
       password: '',
       nicknameInputError: '',
       pwdInputError: '',
