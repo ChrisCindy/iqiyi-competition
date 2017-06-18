@@ -20,9 +20,10 @@
 </template>
 
 <script>
-import { getFollowVideo } from '@/database'
+import { getFollowVideo, saveFollowVideo } from '@/database'
 import { mapState } from 'vuex'
 import * as types from '@/vuex/mutation-types'
+import { getIqiyiResponse } from '@/api'
 
 export default {
   name: 'track',
@@ -48,6 +49,36 @@ export default {
           videoId: detail.id
         }
       })
+    },
+    checkUpdate (video) {
+      if (Date.now() - parseInt(video.date_timestamp) < 24 * 60 * 60 * 1000 || video.update_num === video.total_num) {
+        return
+      }
+      getIqiyiResponse('search', {
+        key: video.title,
+        from: 'mobile_list',
+        page_num: 1,
+        page_size: 50
+      }).then(response => {
+        for (let item of response.data) {
+          if (item.id === video.id) {
+            if (item.p_type === '2') {
+              if (item.update_num !== video.update_num) {
+                video.update_num = item.update_num
+                saveFollowVideo('track', item)
+              }
+            } else {
+              if (item.date_timestamp !== video.date_timestamp) {
+                video.date_timestamp = item.date_timestamp
+                video.date_format = item.date_format
+                saveFollowVideo('track', item)
+              }
+            }
+            break
+          }
+        }
+      }).catch(() => {
+      })
     }
   },
   created () {
@@ -56,6 +87,7 @@ export default {
         video.modifiedImg = utils.handleImgUrl(video.img, '180_236')
         return video
       })
+      this.trackVideo.map(this.checkUpdate)
     })
   }
 }

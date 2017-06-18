@@ -33,6 +33,10 @@ npm run build
 # 或者通过 express/flask/play 等 web 框架提供静态文件的功能进行部署
 ```
 
+## 线上预览
+
+本项目已部署至线上，[点我预览](http://chriscindy.gitlab.io/iqiyi-competition)
+
 ## 本地预览
 
 ```bash
@@ -54,6 +58,55 @@ npm run dev
 ### 定位
 
 爱奇艺 lite 定位于一个追剧管理 webapp，其剔除了爱奇艺 webapp 本身相对臃肿的其他功能，只专注于追剧，可以让用户的注意力只聚焦于追剧本身，这也是「lite」的含义所在。
+
+-----
+
+## 代码结构
+
+```bash
+.
+├── README.md    
+├── build
+├── config
+├── dist
+├── index.html
+├── node_modules
+├── package.json 
+├── src  # 源码目录
+│   ├── App.vue  # 根组件
+│   ├── api  # 封装爱奇艺接口
+│   ├── assets  # 存放图片、CSS 等静态资源
+│   ├── auth.js  # 账号体系
+│   ├── components  # 通用组件
+│   ├── database  # 数据库配置及暴露接口
+│   ├── main.js  # 入口 JS 文件
+│   ├── router  # 路由配置
+│   ├── utils  # 定制函数工具库
+│   ├── views  # 页面
+│   │   ├── auth # 账号体系相关页面
+│   │   │   ├── ChangePassword.vue
+│   │   │   ├── Login.vue
+│   │   │   ├── RetrievePassword.vue
+│   │   │   └── Signup.vue
+│   │   ├── common  # 通用页面
+│   │   │   └── VideoDetail.vue
+│   │   └── content  # 主体内容页面
+│   │       ├── Content.vue
+│   │       ├── account  # 账号页面
+│   │       │   └── Account.vue
+│   │       ├── explore  # 发现页面
+│   │       │   ├── ChannelDetail.vue
+│   │       │   └── Explore.vue
+│   │       ├── follow  # 关注页面
+│   │       │   ├── Favorite.vue
+│   │       │   ├── Follow.vue
+│   │       │   └── Track.vue
+│   │       └── search  # 搜索页面
+│   │           └── Search.vue
+│   └── vuex  # 全局存储、组件间通信
+├── static
+└── test
+```
 
 -----
 
@@ -81,14 +134,18 @@ npm run dev
 
 时间所限，本应用可优化的点还有很多，以下列举几点：
 
-### 1. 静态资源缓存
+### 1. 首屏加载速度
+
+属于 Vue SPA 的常见问题，可以考虑采用服务端渲染技术进行进一步优化。
+
+### 2. 静态资源缓存
 
 可在 service worker 进程中进行必要的静态资源缓存，减轻网络压力
 
-### 2. 接入服务端
+### 3. 接入服务端
 
 目前的账户体系依赖于浏览器本地的数据库，安全性以及灵活性都不如真实的服务端，未来可考虑接入。
 
-### 3. 代码优化
+### 4. 代码优化
 
 引入 RxJS 对代码进行重构，提升编码可靠性以及可维护性。

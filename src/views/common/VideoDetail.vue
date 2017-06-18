@@ -21,6 +21,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { isInCollection, saveFollowVideo, deleteFollowVideo } from '@/database'
+
 export default {
   name: 'video-detail',
   data () {
