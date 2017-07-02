@@ -45,11 +45,13 @@ export default {
       window.history.go(-1)
     },
     fetchSearchResult (pageNum) {
-      this.loadingBar = true
+      if (pageNum === 1) {
+        this.loadingBar = true
+      }
       return getIqiyiResponse('search', {
         key: this.searchQuery,
         from: 'mobile_list',
-        page_num: pageNum,
+        pg_num: pageNum,
         page_size: 30
       }).then(response => {
         this.loadingBar = false
