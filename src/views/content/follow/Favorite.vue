@@ -10,7 +10,7 @@
         <img class="left-cover"
         :src="video.img" alt="" slot="left">
           <span slot="describe">
-            <span>{{video.date_format}} - </span>
+            <span>{{video.presentYear}} - </span>
             {{video.videoUpdateText}}
           </span>
           <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">

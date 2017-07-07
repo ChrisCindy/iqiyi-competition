@@ -223,6 +223,15 @@ export default {
   height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  .mu-appbar {
+    padding: 0;
+    .left {
+      flex-shrink: 1;
+    }
+    .right {
+      flex-shrink: 1;
+    }
+  }
   .channel-title{
     font-size: 15px;
   }

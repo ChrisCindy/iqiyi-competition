@@ -56,7 +56,7 @@ export default {
       return scheme
     },
     shareUrl () {
-      let url = `http://chriscindy.gitlab.io/plain-html/jump.html?a_id=${this.detail.a_id}&tv_id=${this.detail.tv_id}`
+      let url = `http://chriscindytop/share/?a_id=${this.detail.a_id}&tv_id=${this.detail.tv_id}`
       return url
     }
   },
