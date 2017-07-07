@@ -1,6 +1,7 @@
 <template>
   <div id="channel-detail" ref="wrapper">
-    <mu-appbar :title="channelName" class="is-fixed-top">
+    <mu-appbar class="is-fixed-top">
+      <mu-flat-button slot="left" @click="goBack" :label="channelName" icon="navigate_before" labelClass="channel-title"/>
       <mu-dropDown-menu style="height: 56px;color: #FFF" slot="right" :value="channelId" :autoWidth="true" labelClass="appbar-text-color" iconClass="appbar-text-color" :maxHeight="300">
         <mu-menu-item value="0" title="频道"></mu-menu-item>
         <mu-menu-item v-for="channel in channelList" :value="channel.id" :title="channel.name" :key="channel.id" @click="switchChannel(channel)"/>
@@ -88,6 +89,9 @@ export default {
     })
   },
   methods: {
+    goBack () {
+      window.history.go(-1)
+    },
     fetchDetailData (pageNum, mode = '11') {
       return getIqiyiResponse('channel', {
         type: 'detail',
@@ -219,6 +223,9 @@ export default {
   height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  .channel-title{
+    font-size: 15px;
+  }
   .detail-data-list {
     padding-top: 56px;
     .display-img {

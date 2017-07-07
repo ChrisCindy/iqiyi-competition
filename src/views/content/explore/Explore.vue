@@ -1,9 +1,11 @@
 <template>
   <div id="explore">
-    <mu-drawer :open="open" width="30%" :docked="false" @close="toggleChannelList()">
+    <mu-drawer :open="open" width="35%" :docked="false"  @close="toggleChannelList()">
       <mu-list>
-        <mu-list-item v-for="channel in channelList" :title="channel.name" :key="channel.id" @click="jumpToChannelDetail(channel)">
-        </mu-list-item>
+        <template v-for="channel in channelList">
+          <mu-list-item :title="channel.name" :key="channel.id" @click="jumpToChannelDetail(channel)"/>
+          <mu-divider/>
+        </template>
       </mu-list>
     </mu-drawer>
     <mu-appbar title="发现" titleClass="center-block">
@@ -31,6 +33,8 @@
             </mu-content-block>
           </mu-paper>
         </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       </swiper>
     </mu-content-block>
   </div>
@@ -59,7 +63,9 @@ export default {
       swiperOption: {
         loop: true,
         preloadImages: false,
-        lazyLoading: true
+        lazyLoading: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev'
       }
     }
   },
@@ -97,17 +103,14 @@ export default {
     },
     getChannelList () {
       getChannelListFromDB().then(channelList => {
-        this.channelList = channelList
-        // update database every day
-        if (channelList.length > 0 && Date.now() - channelList[0].datetime < 24 * 60 * 60 * 1000) {
-          return Promise.resolve()
+        // update database every week
+        if (channelList.length > 0 && Date.now() - channelList[0].datetime < 7 * 24 * 60 * 60 * 1000) {
+          this.channelList = channelList
         } else {
-          return Promise.reject()
+          return getIqiyiResponse('channel', {
+            type: 'list'
+          })
         }
-      }).catch(() => {
-        return getIqiyiResponse('channel', {
-          type: 'list'
-        })
       }).then((response) => {
         if (response) {
           this.channelList = response.data
@@ -119,8 +122,8 @@ export default {
     },
     fetchCardData () {
       getCardFromDB().then(cardList => {
-        // update database every hour
-        if (cardList.length > 0 && Date.now() - cardList[0].datetime < 60 * 60 * 1000) {
+        // update database every day
+        if (cardList.length > 0 && Date.now() - cardList[0].datetime < 24 * 60 * 60 * 1000) {
           this.cardData = cardList
           this.loading = false
         } else {
@@ -165,6 +168,7 @@ export default {
   position: relative;
   user-select: none;
   overflow: auto;
+  padding-bottom: 56px;
   .card-paper {
     width: 100%;
     height: 435px;
@@ -194,6 +198,16 @@ export default {
         margin-top: 10px;
       }
     }
+  }
+  .swiper-button-next {
+    background-image: url('../../../assets/images/enter.svg');
+    top: auto;
+    bottom: 20px;
+  }
+  .swiper-button-prev {
+    background-image: url('../../../assets/images/return.svg');
+    top: auto;
+    bottom: 20px;
   }
 }
 </style>

@@ -1,5 +1,9 @@
 <template>
   <div id="retrieve-password">
+    <mu-appbar title="找回密码" titleClass="center-block">
+      <mu-flat-button @click="goBack" slot="left" label="返回" icon="navigate_before" primary/>
+      <mu-flat-button slot="right"  labelPosition="before" @click="goBackHome" label="主页" icon="home" primary/>
+    </mu-appbar>
     <div class="container">
       <mu-text-field hintText="请输入注册昵称" type="text" v-model="nickname" icon="person" :errorText="nicknameInputError"></mu-text-field>
       <div>
@@ -22,6 +26,14 @@ export default {
     }
   },
   methods: {
+    goBack () {
+      window.history.go(-1)
+    },
+    goBackHome () {
+      this.$router.push({
+        name: 'track'
+      })
+    },
     confirmNickname () {
       if (utils.isEmpty(this.nickname)) {
         this.nicknameInputError = '请输入昵称'
@@ -33,11 +45,18 @@ export default {
             changePwdNickname: this.nickname
           })
           this.$router.push({
-            name: 'change-password'
+            name: 'secret-question'
           })
         } else {
           this.nicknameInputError = '不存在此用户'
         }
+      })
+    }
+  },
+  mounted () {
+    if (this.changePwdNickname) {
+      this.$store.commit(types.UPDATE_CHANGE_PWD_NICKNAME, {
+        changePwdNickname: null
       })
     }
   }

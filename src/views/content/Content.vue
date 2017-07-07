@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="loading-bar" v-show="isLoading">
-      <mu-linear-progress  color="#FFFFFF" />
+      <mu-linear-progress :size="3" color="#009688" />
     </div>
     <router-view></router-view>
     <bottom-nav></bottom-nav>

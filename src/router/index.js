@@ -14,11 +14,14 @@ const Track = resolve => require(['@/views/content/follow/Track'], resolve)
 const Favorite = resolve => require(['@/views/content/follow/Favorite'], resolve)
 
 const Search = resolve => require(['@/views/content/search/Search'], resolve)
+
 const Account = resolve => require(['@/views/content/account/Account'], resolve)
+const BrowsingHistory = resolve => require(['@/views/content/account/BrowsingHistory'], resolve)
 
 const Signup = resolve => require(['@/views/auth/Signup'], resolve)
 const Login = resolve => require(['@/views/auth/Login'], resolve)
 const RetrievePassword = resolve => require(['@/views/auth/RetrievePassword'], resolve)
+const SecretQuestion = resolve => require(['@/views/auth/SecretQuestion'], resolve)
 const ChangePassword = resolve => require(['@/views/auth/ChangePassword'], resolve)
 
 const VideoDetail = resolve => require(['@/views/common/VideoDetail'], resolve)
@@ -68,6 +71,11 @@ const router = new Router({
     component: Search
   },
   {
+    path: '/browsing-history',
+    name: 'browsing-history',
+    component: BrowsingHistory
+  },
+  {
     path: '/signup',
     name: 'signup',
     component: Signup
@@ -81,6 +89,11 @@ const router = new Router({
     path: '/retrieve-password',
     name: 'retrieve-password',
     component: RetrievePassword
+  },
+  {
+    path: '/secret-question',
+    name: 'secret-question',
+    component: SecretQuestion
   },
   {
     path: '/change-password',

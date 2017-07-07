@@ -3,23 +3,28 @@
     <div class="no-favorite-tip" v-if="favoriteVideo.length === 0">
       您没有收藏的视频，赶快去关注吧~
     </div>
-    <mu-list>
-      <mu-list-item @click="jumpToVideoDetail(video)" v-for="video in favoriteVideo" :title="video.title" :key="video.id">
+    <mu-list v-else>
+      <template v-for="video in favoriteVideo">
+        <mu-list-item @click="jumpToVideoDetail($event,video)" :title="video.title" 
+        :describeLine="1" :key="video.id">
         <img class="left-cover"
         :src="video.img" alt="" slot="left">
-        <span slot="describe">
-          <span>{{video.date_format}}</span>
-          <br/>
-          {{video.videoUpdateText}}
-        </span>
+          <span slot="describe">
+            <span>{{video.date_format}} - </span>
+            {{video.videoUpdateText}}
+          </span>
+          <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
+            <mu-menu-item title="取消关注" @click="cancelCollect(video)" />
+          </mu-icon-menu>
+        </mu-list-item>
         <mu-divider />
-      </mu-list-item>
+      </template>
     </mu-list>
   </div> 
 </template>
 
 <script>
-import { getFollowVideo } from '@/database'
+import { getFollowVideo, deleteFollowVideo } from '@/database'
 import { mapState } from 'vuex'
 import * as types from '@/vuex/mutation-types'
 
@@ -36,7 +41,10 @@ export default {
     })
   },
   methods: {
-    jumpToVideoDetail (detail) {
+    jumpToVideoDetail (evenvt, detail) {
+      if (event.target.classList[0] === 'mu-ripple-wrapper') {
+        return
+      }
       detail.modifiedImg = utils.handleImgUrl(detail.img, '480_270')
       this.$store.commit(types.UPDATE_VIDEO_DETAIL, {
         detail
@@ -46,6 +54,16 @@ export default {
         params: {
           videoId: detail.id
         }
+      })
+    },
+    cancelCollect (detail) {
+      deleteFollowVideo('favorite', detail.id, this.nickname).then(deletedCount => {
+        const index = this.favoriteVideo.findIndex((element) => {
+          return element.id === detail.id
+        })
+        this.favoriteVideo.splice(index, 1)
+      }).catch(error => {
+        utils.showToast(error.toString())
       })
     }
   },
@@ -62,6 +80,9 @@ export default {
 
 <style lang="less">
   #favorite {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 56px;
     .no-favorite-tip {
       margin-top: 60px;
       text-align: center;

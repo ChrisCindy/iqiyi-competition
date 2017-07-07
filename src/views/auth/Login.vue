@@ -6,7 +6,7 @@
     <div class="container">
       <mu-text-field hintText="请输入昵称" type="text" v-model="nickname" icon="person" :errorText="nicknameInputError"></mu-text-field>
       <mu-text-field hintText="请输入密码" type="password" v-model="password" icon="lock" :errorText="pwdInputError"></mu-text-field>
-      <div>
+      <div class="login-btn">
         <mu-raised-button :disabled="banClick" primary @click="login">登录</mu-raised-button>
       </div>
       <div class="signup-tip">
@@ -47,7 +47,8 @@ export default {
       }).then(result => {
         this.banClick = true
         utils.showToast('登录成功', 1000)
-        const redirect = this.$route.params.redirect
+        const redirect = this.$route.query.redirect
+        console.log(this.$route)
         if (redirect) {
           setTimeout(() => {
             this.$router.push({name: redirect})
@@ -69,8 +70,6 @@ export default {
   #login{
     width: 100%;
     height: 100%;
-    // background: #FFF url(../../assets/images/wallpaper.jpg) 0% 0% / 100% no-repeat;
-    // opacity: 0.5;
     .logo {
       display: flex;
       justify-content: center;
@@ -78,11 +77,12 @@ export default {
     }
     .container{
       padding-top: 60px;
-      // height: 100%;
-      // background-color: rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       align-items: center;
+      .login-btn {
+        margin-top: 20px;
+      }
       .signup-tip {
         margin-top: 20px;
         font-size: 12px;

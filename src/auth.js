@@ -68,7 +68,7 @@ export default {
    */
 
   signup (creds) {
-    return saveUser(creds.nickname, creds.password).then(result => {
+    return saveUser(creds.nickname, creds.password, creds.questionType, creds.answer).then(result => {
       return Promise.resolve(result)
     }).catch(error => {
       return Promise.reject(error)

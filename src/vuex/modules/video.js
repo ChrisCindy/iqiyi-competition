@@ -5,6 +5,14 @@ const video = {
     detail: {}
   },
   getters: {
+    presentYear: state => {
+      const detail = state.detail
+      if (detail.date_format) {
+        return state.detail.date_format.split('-')[0]
+      } else {
+        return ''
+      }
+    },
     videoTypeText: state => {
       switch (state.detail.p_type) {
         case '1': return '类别：单视频'
